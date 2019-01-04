@@ -2,9 +2,14 @@
 import sys
 
 def main():
-    print sys.getdefaultencoding() # 系统默认代码中出现的字符对应的二进制码用编码方式进行encode
-    tmp1 = '中文'  # 这是一个str，也就是说使用二进制存的，在系统默认编码的方式下存。
-    print type(tmp1), tmp1
+    print sys.getdefaultencoding() # 系统默认代码中出现的字符对应的二进制码用编码方式进行encode = ascii
+    tmp1 = '中文'  # 这是一个str，也就是说使用二进制存的，在系统默认编码的方式下存。 错！！！这是当前文件的内容，应该是以coding声明进行encode
+    print type(tmp1), tmp1  # 这个tmp1是str类型，print时，自动用前面声明的coding方式进行decode成unicode
+    print tmp1.decode('utf8') # 这里decode成功，说明前面tmp1定义的时候确实使用utf8进行encode，而不是系统默认的ascii
+
+    tmp2 = (u'中文').encode('gbk')
+    print type(tmp2), tmp2  # 这个tmp2也是str类型，但是是gbk编码后的，print时默认用coding方式进行decode成unicode，所以乱码了
+
     tmp = u'中文' # 这个前缀u类似于强转(decode)str为unicode，所以如果不添加coding=utf8注释，那么以ascii进行编码的话，是支持不了这个中文的
     print type(tmp), tmp
 
